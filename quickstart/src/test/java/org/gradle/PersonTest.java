@@ -9,4 +9,16 @@ public class PersonTest {
         Person person = new Person("Larry");
         assertEquals("Larry", person.getName());
     }
+
+    @Test
+    public void test1() {
+        Person person = new Person("Larry");
+        assertEquals("Larry", person.getName());
+    }
+
+    @Test
+    public void test() {
+        Person person = new Person("Larry");
+        assertEquals("Larry2", person.getName());
+    }
 }
