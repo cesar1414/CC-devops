@@ -20,6 +20,14 @@ Vagrant.configure('2') do |config|
  config.vm.define 'linux-server-1' do |s|
    s.vm.provision "docker"
    s.vm.provision "docker_compose", compose_version: '1.23.1'
+   s.vm.provision "shell", inline: <<-SHELL
+        sudo add-apt-repository -y ppa:webupd8team/java
+        sudo apt-get update
+        sudo apt-get -y upgrade
+        echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections 
+        echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
+        sudo apt-get -y install oracle-java8-installer
+     SHELL
    s.vm.provider :openstack do |os, override|
      os.server_name = 'AT07CECA02'
      os.flavor = 'f2.desktop.tiny'
