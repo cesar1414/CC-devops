@@ -1,7 +1,4 @@
 version: '3'
-secrets:
-  my_secret_data:
-    external: true
 
 services:
   jenkins_server:
@@ -11,13 +8,26 @@ services:
     ports:
       - "8080:8080"
       - "5000:5000"
-      - "50000:50000"
     volumes:
       - ./jenkins:/var/jenkins_home
-  jenkins_slave:
-   image: "registry.jala.info/devops/jenkins/jnlp-slave:3.27-1-alpine"
-   environment:
-     - -url
-     - http://jenkins_server:50000
-     - -workDir=/home/jenkins/agent
-     - <cesar>
+  
+  go-server:
+    image: registry.jala.info/devops/gocd/gocd-server:v18.1.0
+    ports:
+      - '8153:8153'
+      - '8154:8154'
+
+  goagent:
+    image: registry.jala.info/devops/gocd/gocd-agent-alpine-3.7:v18.1.0
+    links:
+      - go-server
+    environment:
+      GO_SERVER_URL: https://go-server:8154/go
+
+  sonarqube:
+    image: registry.jala.info/devops/sonarqube:6.7.4-alpine
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    links:
+      - go-goagent
