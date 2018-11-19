@@ -9,15 +9,16 @@ pipeline {
         }
         stage ('Testing') {
             steps {
-                sh './quickstart/gradlew test -p quickstart'
-                junit 'build/reports/tests/test/*.html'
+                sh './quickstart gradlew test -p quickstart'
+                junit '**/test-results/test/*.xml'
             }
         }
         stage ('Publish') {
             steps {
                 sh './quickstart/gradlew uploadArchives -p quickstart'
-                archiveArtifacts artifacts: 'repos/*.jar'
+                archiveArtifacts artifacts: '**/repos/*.jar'
             }
         }
     }
 }
+
