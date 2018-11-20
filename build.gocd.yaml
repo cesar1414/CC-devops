@@ -50,4 +50,6 @@ pipelines:
                     command: ./gradlew
                     arguments:
                       - sonarqube
+
+                      
             
