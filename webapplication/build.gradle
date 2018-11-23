@@ -12,6 +12,7 @@ plugins {
 }
 apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'java'
+apply plugin: 'jacoco'
 apply plugin: 'war'
 
 repositories {
@@ -44,3 +45,12 @@ uploadArchives {
        }
     }
 }
+
+jacocoTestReport {
+  reports {
+  xml.enabled = true
+  html.enabled = true
+  }
+}
+
+check.dependsOn jacocoTestReport
