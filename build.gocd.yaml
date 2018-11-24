@@ -4,7 +4,7 @@ pipelines:
     group: Application
     materials:
       repo:
-        git: https://github.com/cesar1414/Devops.git
+        git: https://github.com/cesar1414/CC-devops.git
         branch: master
         whitelist:
             - webapplication/**/*
