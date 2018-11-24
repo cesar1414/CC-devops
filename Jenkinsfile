@@ -21,7 +21,7 @@ pipeline {
         }
         stage ('deploy') {
             steps {
-                sh './webapplication/gradlew -b deploy.gradle deploy'
+                sh './webapplication/gradlew -b deploy.gradle deploy -p webapplication'
             }
         }
     }
