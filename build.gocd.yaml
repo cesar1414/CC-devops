@@ -1,43 +1,43 @@
 format_version: 3
 pipelines:
-  cc-quickstart-ci:
+  cc-webapplication-ci:
     group: Application
     materials:
       repo:
-        git: https://github.com/devops-at07/CC-devops.git
+        git: https://github.com/cesar1414/Devops.git
         branch: master
         whitelist:
-            - quickstart/**/*
+            - webapplication/**/*
     stages:
       - Build:
           jobs:
             Building:
               tasks:
                 - exec:
-                    working_directory: quickstart
+                    working_directory: webapplication
                     command: ./gradlew
                     arguments:
                       - clean
                       - assemble
               artifacts:
                 - build:
-                    source: quickstart/build/libs/*.jar
-                    destination: jar
+                    source: webapplication/build/libs/*.war
+                    destination: war
       - Test:
           jobs:
             Unit_Test:
               tasks:
                 - exec:
-                    working_directory: quickstart
+                    working_directory: webapplication
                     command: ./gradlew
                     arguments:
                       - test
               artifacts:
                 - build:
-                    source: quickstart/build/reports/tests/test/**/*
+                    source: webapplication/build/reports/tests/test/**/*
                     destination: html
                 - test:
-                    source: quickstart/build/test-results/test/*.xml
+                    source: webapplication/build/test-results/test/*.xml
                     destination: xml
               tabs:
                 unit_test: html/index.html
@@ -46,7 +46,7 @@ pipelines:
             Sonarqube:
               tasks:
                 - exec:
-                    working_directory: quickstart
+                    working_directory: webapplication
                     command: ./gradlew
                     arguments:
                       - sonarqube
@@ -59,7 +59,7 @@ pipelines:
                       - dependencyCheckAnalyze
               artifacts:
                 - build:
-                    source: quickstart/build/reports/**/*
+                    source: webapplication/build/reports/**/*
                     destination: html
               tabs:
                 OWASP: html/dependency-check-report.html
